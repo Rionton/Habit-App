@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily — Habit & Accountability</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--text:#17181c;--muted:#70747e;--line:#e8e9ee;--accent:#5b5ce2;--accent2:#ececff;--good:#16845b;--bad:#c14d4d;--shadow:0 10px 35px rgba(20,22,40,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}
+.app{display:flex;min-height:100vh}.sidebar{width:235px;background:#fff;border-right:1px solid var(--line);padding:28px 18px;position:fixed;height:100vh}
+.logo{font-size:24px;font-weight:800;padding:0 12px 28px;letter-spacing:-1px}.logo span{color:var(--accent)}
+.nav button{display:block;width:100%;padding:12px 14px;text-align:left;background:none;border-radius:10px;color:#676b75;margin:4px 0}.nav button.active,.nav button:hover{background:var(--accent2);color:var(--accent);font-weight:700}
+.main{margin-left:235px;width:calc(100% - 235px);padding:35px 42px 80px;max-width:1250px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.date{color:var(--muted);font-size:14px}.hello{font-size:30px;font-weight:800;letter-spacing:-1px;margin:4px 0}.avatar{width:42px;height:42px;border-radius:50%;background:var(--accent);color:white;display:grid;place-items:center;font-weight:800}
+.grid{display:grid;grid-template-columns:1.6fr 1fr;gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}.hero{display:flex;align-items:center;justify-content:space-between;min-height:170px}.eyebrow{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}.score{font-size:64px;font-weight:850;letter-spacing:-4px;margin:7px 0}.score small{font-size:20px;letter-spacing:0;color:var(--muted)}
+.ring{width:116px;height:116px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) var(--p),#ececf2 0);position:relative}.ring:after{content:"";position:absolute;inset:9px;background:white;border-radius:50%}.ring strong{z-index:1;font-size:23px}.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{padding:17px;border:1px solid var(--line);border-radius:14px}.stat b{display:block;font-size:23px;margin-top:5px}.section-title{font-size:18px;font-weight:800;margin:27px 0 13px}.habit{display:flex;align-items:center;gap:13px;padding:14px 0;border-bottom:1px solid var(--line)}.habit:last-child{border-bottom:0}.check{width:28px;height:28px;border:2px solid #d6d7df;border-radius:9px;background:#fff;color:white;display:grid;place-items:center;font-weight:900}.check.done{background:var(--accent);border-color:var(--accent)}.habit-name{flex:1}.habit-name small{display:block;color:var(--muted);margin-top:2px}.btn{padding:11px 16px;border-radius:10px;background:var(--accent);color:#fff;font-weight:700}.btn.secondary{background:#f0f0f5;color:#444}.btn.danger{background:#fff0f0;color:var(--bad)}
+.progress{height:8px;background:#eeeef3;border-radius:20px;overflow:hidden;margin:9px 0}.progress i{display:block;height:100%;background:var(--accent);width:0;border-radius:20px}.actions{display:flex;gap:9px;flex-wrap:wrap}.reflection textarea{width:100%;min-height:92px;border:1px solid var(--line);border-radius:12px;padding:13px;resize:vertical;outline:none}.reflection textarea:focus{border-color:var(--accent)}.rating{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 20px}.rating button{width:40px;height:40px;border-radius:10px;background:#f0f0f5;color:#5e6069;font-weight:800}.rating button.sel{background:var(--accent);color:#fff}.field{margin:17px 0}.field label{font-size:13px;font-weight:750;display:block;margin-bottom:7px}.quote{font-size:16px;line-height:1.55}.good{color:var(--good)}.bad{color:var(--bad)}.hidden{display:none}.page{display:none}.page.active{display:block}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.day{min-height:76px;border:1px solid var(--line);border-radius:12px;padding:8px;background:#fff}.day strong{font-size:12px}.day .mini{font-size:11px;color:var(--muted);margin-top:10px}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:3px}.insight{padding:14px;border-radius:13px;background:#f7f7fb;margin:9px 0}.modal{position:fixed;inset:0;background:rgba(16,18,27,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:5}.modal.show{display:flex}.modalbox{background:#fff;border-radius:20px;max-width:560px;width:100%;max-height:90vh;overflow:auto;padding:25px}.modalhead{display:flex;justify-content:space-between;align-items:center}.close{background:#f0f0f4;border-radius:50%;width:34px;height:34px}.habitrow{display:grid;grid-template-columns:1fr auto;gap:10px;margin:10px 0}.habitrow input,.habitrow select{border:1px solid var(--line);padding:11px;border-radius:10px}.toast{position:fixed;bottom:25px;right:25px;background:#17181c;color:#fff;padding:12px 16px;border-radius:11px;display:none;z-index:9}.mobile-nav{display:none}
+@media(max-width:800px){.sidebar{display:none}.main{margin-left:0;width:100%;padding:23px 16px 90px}.grid{grid-template-columns:1fr}.top{margin-bottom:20px}.hello{font-size:25px}.statgrid{grid-template-columns:1fr 1fr 1fr}.hero{min-height:145px}.score{font-size:50px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);z-index:4;padding:8px;justify-content:space-around}.mobile-nav button{background:none;color:#777;font-size:11px}.mobile-nav button.active{color:var(--accent);font-weight:800}.calendar{gap:4px}.day{min-height:65px;padding:6px}.day .mini{font-size:9px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+<div class="logo">daily<span>.</span></div>
+<nav class="nav">
+<button class="active" data-page="dashboard">⌂ &nbsp; Dashboard</button>
+<button data-page="habits">✓ &nbsp; Habits</button>
+<button data-page="calendar">▦ &nbsp; Calendar</button>
+<button data-page="insights">◔ &nbsp; Insights</button>
+<button data-page="history">☰ &nbsp; History</button>
+</nav>
+</aside>
+
+<main class="main">
+<div class="top"><div><div class="date" id="today"></div><div class="hello">Good evening, <span id="userName">Founder</span> 👋</div></div><div class="avatar">F</div></div>
+
+<section id="dashboard" class="page active">
+<div class="grid">
+<div>
+<div class="card hero"><div><div class="eyebrow">Today's score</div><div class="score" id="heroScore">—<small>/10</small></div><div class="date" id="scoreText">Reflect on your day tonight.</div></div><div class="ring" id="ring"><strong id="ringText">0%</strong></div></div>
+<div class="statgrid" style="margin-top:18px"><div class="stat"><div class="eyebrow">Habits</div><b id="habitCount">0/0</b></div><div class="stat"><div class="eyebrow">Streak</div><b>🔥 <span id="streak">0</span></b></div><div class="stat"><div class="eyebrow">Tracked</div><b id="tracked">0</b></div></div>
+<div class="section-title">Today's habits</div><div class="card" id="habitList"></div>
+<div class="actions" style="margin-top:15px"><button class="btn" onclick="openReflection()">Reflect on Today</button><button class="btn secondary" onclick="openHabitModal()">+ Add Habit</button></div>
+</div>
+<div>
+<div class="card"><div class="eyebrow">Your accountability loop</div><h2 style="margin:7px 0 12px">Plan → Do → Reflect → Improve</h2><p class="quote">Don't aim for a perfect day. Aim for an honest one.</p></div>
+<div class="section-title">Today's reflection</div><div class="card" id="reflectionCard"><div class="date">No reflection yet.</div><p>At the end of the day, rate yourself honestly and write one good and one bad thing.</p><button class="btn" onclick="openReflection()">Write reflection</button></div>
+</div>
+</div>
+</section>
+
+<section id="habits" class="page"><h1>Habits</h1><p class="date">Build consistency one check at a time.</p><div class="actions" style="margin:18px 0"><button class="btn" onclick="openHabitModal()">+ Add Habit</button></div><div class="card" id="allHabits"></div></section>
+
+<section id="calendar" class="page"><h1>Calendar</h1><p class="date">A visual record of how you showed up.</p><div class="card" style="margin-top:18px"><h3 id="monthTitle"></h3><div class="calendar" id="calendarGrid"></div></div></section>
+
+<section id="insights" class="page"><h1>Insights</h1><p class="date">Patterns become visible when you reflect consistently.</p><div class="statgrid" style="margin-top:18px"><div class="stat"><div class="eyebrow">Average rating</div><b id="avgScore">—</b></div><div class="stat"><div class="eyebrow">Habit average</div><b id="avgHabit">—</b></div><div class="stat"><div class="eyebrow">Best day</div><b id="bestDay">—</b></div></div><div class="card" style="margin-top:18px"><h3>Recent ratings</h3><div id="bars"></div></div><div class="card" style="margin-top:18px"><h3>Pattern starter</h3><div class="insight"><b class="good">✓ Keep doing</b><div id="goodPattern">Your reflections will reveal this over time.</div></div><div class="insight"><b class="bad">⚠ Improve</b><div id="badPattern">Be honest about what repeatedly gets in your way.</div></div></div></section>
+
+<section id="history" class="page"><h1>History</h1><p class="date">Your private daily journal.</p><div id="historyList" style="margin-top:18px"></div></section>
+</main>
+</div>
+<div class="mobile-nav">
+<button class="active" data-page="dashboard">⌂<br>Home</button><button data-page="habits">✓<br>Habits</button><button data-page="calendar">▦<br>Calendar</button><button data-page="insights">◔<br>Insights</button><button data-page="history">☰<br>History</button>
+</div>
+
+<div class="modal" id="reflectionModal"><div class="modalbox reflection">
+<div class="modalhead"><div><div class="eyebrow">Daily accountability</div><h2 style="margin:4px 0">How was your day?</h2></div><button class="close" onclick="closeModal('reflectionModal')">×</button></div>
+<div class="field"><label>Rate your day <span id="ratingLabel">—</span></label><div class="rating" id="rating"></div></div>
+<div class="field"><label>What was GOOD today?</label><textarea id="good" placeholder="One thing you are proud of..."></textarea></div>
+<div class="field"><label>What was BAD today?</label><textarea id="bad" placeholder="What could you have done better?"></textarea></div>
+<div class="field"><label>What did you learn? <span style="color:#aaa">(optional)</span></label><textarea id="lesson" placeholder="A lesson from today..."></textarea></div>
+<div class="field"><label>Tomorrow's ONE priority</label><textarea id="priority" placeholder="The one thing that must happen tomorrow..."></textarea></div>
+<button class="btn" style="width:100%" onclick="saveReflection()">Save reflection</button>
+</div></div>
+
+<div class="modal" id="habitModal"><div class="modalbox">
+<div class="modalhead"><h2>Add habit</h2><button class="close" onclick="closeModal('habitModal')">×</button></div>
+<div id="habitRows"></div><button class="btn secondary" onclick="addHabitRow()">+ Another</button><button class="btn" style="width:100%;margin-top:15px" onclick="saveHabits()">Save habits</button>
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+const KEY='daily-accountability-v1';
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{name:'Founder',habits:[
+{id:1,name:'Deep work / coding',icon:'💻',logs:{}},
+{id:2,name:'Exercise',icon:'🏃',logs:{}},
+{id:3,name:'Read 20 pages',icon:'📖',logs:{}}
+],reflections:{}};
+let selectedRating=0;
+const iso=d=>{let x=new Date(d);return x.toISOString().slice(0,10)}
+const today=iso(new Date());
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function fmt(d){return new Date(d+'T12:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}
+document.getElementById('today').textContent=new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+document.getElementById('userName').textContent=data.name;
+document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>go(b.dataset.page));
+function go(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(p).classList.add('active');document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===p));if(p==='calendar')renderCalendar();if(p==='insights')renderInsights();if(p==='history')renderHistory();if(p==='habits')renderAllHabits()}
+function habitDone(h){return !!h.logs[today]}
+function completion(){return data.habits.length?Math.round(data.habits.filter(h=>habitDone(h)).length/data.habits.length*100):0}
+function render(){renderDashboard();renderAllHabits();renderInsights();renderHistory();renderCalendar()}
+function renderDashboard(){
+const done=data.habits.filter(habitDone).length;document.getElementById('habitCount').textContent=`${done}/${data.habits.length}`;document.getElementById('ring').style.setProperty('--p',completion()+'%');document.getElementById('ringText').textContent=completion()+'%';document.getElementById('tracked').textContent=Object.keys(data.reflections).length;
+let r=data.reflections[today];document.getElementById('heroScore').innerHTML=r?`${r.rating}<small>/10</small>`:'—<small>/10</small>';document.getElementById('scoreText').textContent=r?'Day rated '+r.rating+'/10':'Reflect on your day tonight.';
+let s=calcStreak();document.getElementById('streak').textContent=s;
+document.getElementById('habitList').innerHTML=data.habits.length?data.habits.map(h=>`<div class="habit"><button class="check ${habitDone(h)?'done':''}" onclick="toggleHabit(${h.id})">${habitDone(h)?'✓':''}</button><div class="habit-name">${h.icon||'✓'} ${esc(h.name)}<small>${habitDone(h)?'Completed today':'Not completed yet'}</small></div></div>`).join(''):'<p class="date">No habits yet. Add your first one.</p>';
+document.getElementById('reflectionCard').innerHTML=r?`<div class="eyebrow">Today · ${r.rating}/10</div><p class="quote good">“${esc(r.good)}”</p><p class="quote bad">“${esc(r.bad)}”</p>${r.priority?`<div class="date">Tomorrow: ${esc(r.priority)}</div>`:''}<button class="btn secondary" style="margin-top:12px" onclick="openReflection()">Edit reflection</button>`:`<div class="date">No reflection yet.</div><p>At the end of the day, rate yourself honestly and write one good and one bad thing.</p><button class="btn" onclick="openReflection()">Write reflection</button>`;
+}
+function renderAllHabits(){const el=document.getElementById('allHabits');el.innerHTML=data.habits.map(h=>`<div class="habit"><div style="font-size:24px">${h.icon||'✓'}</div><div class="habit-name"><b>${esc(h.name)}</b><small>${Object.values(h.logs).filter(Boolean).length} completions</small></div><button class="btn danger" onclick="deleteHabit(${h.id})">Delete</button></div>`).join('')||'<p class="date">No habits yet.</p>'}
+function toggleHabit(id){let h=data.habits.find(x=>x.id===id);if(!h)return;if(h.logs[today])delete h.logs[today];else h.logs[today]=true;save();render()}
+function deleteHabit(id){if(confirm('Delete this habit?')){data.habits=data.habits.filter(h=>h.id!==id);save();render()}}
+function openHabitModal(){document.getElementById('habitRows').innerHTML='';addHabitRow();document.getElementById('habitModal').classList.add('show')}
+function addHabitRow(){let d=document.createElement('div');d.className='habitrow';d.innerHTML=`<input class="newhabit" placeholder="Habit name (e.g. 1 hour coding)"><input class="newicon" value="✓" maxlength="2" aria-label="icon">`;document.getElementById('habitRows').appendChild(d)}
+function saveHabits(){document.querySelectorAll('.newhabit').forEach((i,n)=>{let name=i.value.trim();if(name)data.habits.push({id:Date.now()+n,name,icon:document.querySelectorAll('.newicon')[n].value||'✓',logs:{}})});save();closeModal('habitModal');render()}
+function openReflection(){let r=data.reflections[today]||{};selectedRating=r.rating||0;document.getElementById('good').value=r.good||'';document.getElementById('bad').value=r.bad||'';document.getElementById('lesson').value=r.lesson||'';document.getElementById('priority').value=r.priority||'';renderRating();document.getElementById('reflectionModal').classList.add('show')}
+function renderRating(){let el=document.getElementById('rating');el.innerHTML=Array.from({length:10},(_,i)=>`<button class="${selectedRating===i+1?'sel':''}" onclick="setRating(${i+1})">${i+1}</button>`).join('');document.getElementById('ratingLabel').textContent=selectedRating?selectedRating+'/10':'—'}
+function setRating(n){selectedRating=n;renderRating()}
+function saveReflection(){if(!selectedRating){alert('Please rate your day first.');return}data.reflections[today]={rating:selectedRating,good:document.getElementById('good').value.trim(),bad:document.getElementById('bad').value.trim(),lesson:document.getElementById('lesson').value.trim(),priority:document.getElementById('priority').value.trim()};save();closeModal('reflectionModal');toast('Reflection saved. See you tomorrow.');render()}
+function calcStreak(){let n=0,d=new Date();while(true){let k=iso(d);if(!data.reflections[k])break;n++;d.setDate(d.getDate()-1)}return n}
+function renderInsights(){let rs=Object.entries(data.reflections).map(([date,r])=>({date,...r})).sort((a,b)=>a.date.localeCompare(b.date));let avg=rs.length?(rs.reduce((a,r)=>a+r.rating,0)/rs.length).toFixed(1):'—';document.getElementById('avgScore').textContent=avg+'/10';let avgh=data.habits.length?Math.round(Object.values(data.habits).reduce((a,h)=>a+Object.values(h.logs).filter(Boolean).length,0)/(Math.max(1,Object.keys(data.reflections).length)*data.habits.length)*100):0;document.getElementById('avgHabit').textContent=Math.min(100,avgh)+'%';document.getElementById('bestDay').textContent=rs.length?Math.max(...rs.map(x=>x.rating))+'/10':'—';document.getElementById('bars').innerHTML=rs.slice(-14).reverse().map(r=>`<div style="display:grid;grid-template-columns:70px 1fr 35px;align-items:center;gap:8px;margin:9px 0"><span class="date">${r.date.slice(5)}</span><div class="progress"><i style="width:${r.rating*10}%"></i></div><b>${r.rating}</b></div>`).join('')||'<p class="date">Complete your first reflection to see trends.</p>';
+let goods=rs.flatMap(r=>r.good?[r.good]:[]),bads=rs.flatMap(r=>r.bad?[r.bad]:[]);document.getElementById('goodPattern').textContent=goods.length?goods[goods.length-1]:'Your reflections will reveal this over time.';document.getElementById('badPattern').textContent=bads.length?bads[bads.length-1]:'Be honest about what repeatedly gets in your way.'}
+function renderHistory(){let rs=Object.entries(data.reflections).sort((a,b)=>b[0].localeCompare(a[0]));document.getElementById('historyList').innerHTML=rs.map(([d,r])=>`<div class="card" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between"><b>${fmt(d)}</b><b>${r.rating}/10</b></div><p class="good"><b>Good:</b> ${esc(r.good||'—')}</p><p class="bad"><b>Bad:</b> ${esc(r.bad||'—')}</p>${r.lesson?`<p><b>Learned:</b> ${esc(r.lesson)}</p>`:''}${r.priority?`<p class="date"><b>Tomorrow:</b> ${esc(r.priority)}</p>`:''}</div>`).join('')||'<div class="card"><p class="date">No reflections yet.</p></div>'}
+function renderCalendar(){let now=new Date(),y=now.getFullYear(),m=now.getMonth(),first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();document.getElementById('monthTitle').textContent=now.toLocaleDateString('en-IN',{month:'long',year:'numeric'});let g=document.getElementById('calendarGrid');g.innerHTML=['S','M','T','W','T','F','S'].map(x=>`<div class="date" style="text-align:center;font-weight:800">${x}</div>`).join('');for(let i=0;i<first;i++)g.innerHTML+='<div></div>';for(let day=1;day<=days;day++){let k=iso(new Date(y,m,day)),r=data.reflections[k];let count=data.habits.filter(h=>h.logs[k]).length;g.innerHTML+=`<div class="day"><strong>${day}</strong>${r?`<div class="mini"><span class="dot"></span>${r.rating}/10</div>`:''}${count?`<div class="mini">${count}/${data.habits.length} habits</div>`:''}</div>`}}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',2200)}
+function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+render();
+</script>
+</body>
+</html>
